@@ -6,13 +6,14 @@ from tqdm import tqdm
 import wandb
 from loguru import logger
 class Model():
-    def __init__(self,input_dim,hidden_dim1,hidden_dim2,out_dim,weight_decay,lr,test_img ,test_label):
+    def __init__(self,input_dim,hidden_dim1,out_dim,weight_decay,lr,test_img ,test_label):
         self.weight_decay = weight_decay
         self.activate = self.ReLU
         self.params = {
         'W1':np.random.randn(hidden_dim1, input_dim) * np.sqrt(1. / hidden_dim1),
-        'W2':np.random.randn(hidden_dim2, hidden_dim1) * np.sqrt(1. / hidden_dim2),
-        'W3':np.random.randn(out_dim, hidden_dim2) * np.sqrt(1. / out_dim)
+        'b1':np.random.randn(hidden_dim1, 1) * np.sqrt(1. / hidden_dim1),
+        'W2':np.random.randn(out_dim, hidden_dim1) * np.sqrt(1. / out_dim),
+        'b2':np.random.randn(out_dim, 1) * np.sqrt(1. / out_dim)
     }
         self.lr = lr
         self.save_path = Path('./model/')
@@ -31,33 +32,25 @@ class Model():
     def forward(self,x):
         params = self.params
         params['A0'] = x.T
-        params['Z1'] = np.dot(params["W1"], params['A0'])
+        params['Z1'] = np.dot(params["W1"], params['A0']) + params['b1']
         params['A1'] = self.ReLU(params['Z1'])
-        params['Z2'] = np.dot(params["W2"], params['A1'])
-        params['A2'] = self.ReLU(params['Z2'])
-        params['Z3'] = np.dot(params["W3"], params['A2'])
-        params['A3'] = self.softmax(params['Z3'])
+        params['Z2'] = np.dot(params["W2"], params['A1'])+ params['b2']
+        params['A3'] = self.softmax(params['Z2'])
         return params['A3']
     def backward(self,output,y_train,batch_size):
         params = self.params
         change_w = {}
-
-        # Calculate W3 update
-        error = np.sum(output.T - y_train,0)/batch_size
-        change_w['W3'] = np.outer(error, np.sum(params['A2'],1)/batch_size)
-
         # Calculate W2 update
-        error = np.dot(params['W3'].T, error) * self.ReLu_d(np.sum(params['Z2'],1)/batch_size)
+        error = np.sum(output.T - y_train,0)/batch_size
         change_w['W2'] = np.outer(error, np.sum(params['A1'],1)/batch_size)
-
+        change_w['b2'] = error.reshape(-1,1)
         # Calculate W1 update
         error = np.dot(params['W2'].T, error) * self.ReLu_d(np.sum(params['Z1'],1)/batch_size)
         change_w['W1'] = np.outer(error, np.sum(params['A0'],1)/batch_size)
-
+        change_w['b1'] = error.reshape(-1,1)
         # Calculate weight decay
         change_w['W1'] += self.weight_decay * params['W1']
         change_w['W2'] += self.weight_decay * params['W2']
-        change_w['W3'] += self.weight_decay * params['W3']
         
         return change_w
     def cross_entropy(self,pre_y,y):
@@ -73,12 +66,15 @@ class Model():
         params = self.params
         np.save(self.save_path/'W1.npy',params['W1'])
         np.save(self.save_path/'W2.npy',params['W2'])
-        np.save(self.save_path/'W3.npy',params['W3'])
+        np.save(self.save_path/'b1.npy',params['b1'])
+        np.save(self.save_path/'b2.npy',params['b2'])
     def load_model(self):
         params = self.params
         params['W1'] = np.load(self.save_path/'W1.npy')
         params['W2'] = np.load(self.save_path/'W2.npy')
-        params['W3'] = np.load(self.save_path/'W3.npy')
+        params['b1'] = np.load(self.save_path/'b1.npy')
+        params['b2'] = np.load(self.save_path/'b2.npy')
+        
     def train(self,img,label):
         batch_size = 64
         epoch_size = 20
@@ -109,7 +105,7 @@ class Model():
             if test_acc>best_acc:
                 best_acc = test_acc
                 self.save_model()
-                
+
     def eval(self):
         output = self.forward(self.test_img)
         pred = np.argmax(output,0)
@@ -123,6 +119,6 @@ if __name__ == '__main__':
     wandb.init(project="deep_learning")
     loader = DataLoader('./data')
     train_img,train_label,test_img,test_label = loader.load_data()
-    model = Model(input_dim=784,hidden_dim1 = 512,hidden_dim2 = 256,out_dim = 10,weight_decay = 0.00001,lr = 0.001,test_img = test_img,test_label = test_label)
+    model = Model(input_dim=784,hidden_dim1 = 512,out_dim = 10,weight_decay = 0.00001,lr = 0.001,test_img = test_img,test_label = test_label)
     model.train(train_img,train_label)
     
