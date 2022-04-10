@@ -4,8 +4,8 @@ import itertools
 from dataloader import DataLoader
 from train import Model
 config = {
-    'hidden_dim1':[512,256,128,64],
-    'lr':[0.001,0.0001],
+    'hidden_dim1':[512,256,128],
+    'lr':[0.005,0.001,0.0001],
     'weight_decay':[0.0001,0.00001],
 }
 experiment_settings = itertools.product(config['hidden_dim1'], config['lr'], config['weight_decay'])

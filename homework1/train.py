@@ -41,8 +41,8 @@ class Model():
         params = self.params
         change_w = {}
         # Calculate W2 update
-        error = np.sum(output.T - y_train,0)/batch_size
-        change_w['W2'] = np.outer(error, np.sum(params['A1'],1)/batch_size)
+        error = np.sum(output.T - y_train,0)/batch_size# (10,1)
+        change_w['W2'] = np.outer(error, np.sum(params['A1'],1)/batch_size)# 512 764 10x1 512 x1
         change_w['b2'] = error.reshape(-1,1)
         # Calculate W1 update
         error = np.dot(params['W2'].T, error) * self.ReLu_d(np.sum(params['Z1'],1)/batch_size)
@@ -74,10 +74,10 @@ class Model():
         params['W2'] = np.load(self.save_path/'W2.npy')
         params['b1'] = np.load(self.save_path/'b1.npy')
         params['b2'] = np.load(self.save_path/'b2.npy')
-        
+
     def train(self,img,label):
-        batch_size = 64
-        epoch_size = 20
+        batch_size = 3
+        epoch_size = 10
         for epoch in range(epoch_size):
             epoch_loss = 0
             cnt = 0
@@ -119,6 +119,6 @@ if __name__ == '__main__':
     wandb.init(project="deep_learning")
     loader = DataLoader('./data')
     train_img,train_label,test_img,test_label = loader.load_data()
-    model = Model(input_dim=784,hidden_dim1 = 512,out_dim = 10,weight_decay = 0.00001,lr = 0.001,test_img = test_img,test_label = test_label)
+    model = Model(input_dim=784,hidden_dim1 = 512,out_dim = 10,weight_decay = 0.00001,lr = 0.0001,test_img = test_img,test_label = test_label)
     model.train(train_img,train_label)
     
