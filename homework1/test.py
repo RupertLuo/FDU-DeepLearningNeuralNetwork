@@ -14,6 +14,7 @@ train_img,train_label,test_img,test_label = loader.load_data()
 model = Model(input_dim=784,hidden_dim1 = best_hyper_parameter['hidden_dim1'],out_dim = 10,weight_decay = best_hyper_parameter['weight_decay'],lr = best_hyper_parameter['lr'],test_img = test_img,test_label = test_label)
 model.load_model()
 acc,loss = model.eval()
+logger.info(' test_loss = %.4f test_accurary = %.4f'%(loss,acc))
 # 可视化矩阵权重
 plt.matshow(model.params['W1'])
 plt.savefig('./img/W1.jpg')
