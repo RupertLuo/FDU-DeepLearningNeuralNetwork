@@ -14,7 +14,7 @@ def load_dataset(cfg):
         train_transform.transforms.append(transforms.RandomCrop(32, padding=4))
         train_transform.transforms.append(transforms.RandomHorizontalFlip())
     train_transform.transforms.append(transforms.ToTensor())
-    # train_transform.transforms.append(normalize)
+    train_transform.transforms.append(normalize)
     if cfg.DATA.cutout:
         train_transform.transforms.append(Cutout(n_holes=cfg.CUTOUT.n_holes, length=cfg.CUTOUT.length))
 
