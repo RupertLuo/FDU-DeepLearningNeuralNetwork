@@ -3,8 +3,10 @@ MODEL:
 DATA:
   name: 'VOC'
   augmentation: False
+  name: 'cifar-100'
+  augmentation: True
   cutout : False
-  cutmix : True
+  cutmix : False
   mixup :  False
 # cutout config
 CUTOUT:
@@ -12,6 +14,6 @@ CUTOUT:
   length: 16
 TRAIN:
   device: 'cuda:6'
-  batch_size: 256
+  batch_size: 128
   epochs: 20
   lr: 0.1

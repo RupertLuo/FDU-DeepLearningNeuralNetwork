@@ -14,6 +14,7 @@ from torchvision import datasets, transforms
 from model.resnet import ResNet18
 import torch.nn as nn
 from tqdm import tqdm
+import wandb
 def prepare_config():
     # set seeds
     cfg = get_cfg_defaults()
@@ -31,7 +32,26 @@ def prepare_config():
     model_output = Path(cfg.MODEL.saved_path)/cfg.MODEL.name
     model_output.mkdir(exist_ok =True)
     return cfg
+def test(loader,model,device):
+    model.eval()    # Change model to 'eval' mode (BN uses moving mean/var).
+    correct = 0.
+    total = 0.
+    for images, labels in loader:
+        images = images.to(device)
+        labels = labels.to(device)
+
+        with torch.no_grad():
+            pred = model(images)
+
+        pred = torch.max(pred.data, 1)[1]
+        total += labels.size(0)
+        correct += (pred == labels).sum().item()
+
+    val_acc = correct / total
+    model.train()
+    return val_acc
 def main(cfg):
+    wandb.init(project="mid-homework-task1", entity="rupert_luo")
     device = cfg.TRAIN.device
     train_dataset,test_dataset,num_classes = load_dataset(cfg)
     # Data Loader (Input Pipeline)
@@ -58,16 +78,20 @@ def main(cfg):
         mixup = Mixup(cfg.MIXUP.alpha)
     if cfg.DATA.cutmix:
         cutmix = Cutmix(cfg.CUTMIX.cutmix_prob,cfg.CUTMIX.beta)
+    
+
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=cfg.TRAIN.lr,
                                     momentum=0.9, nesterov=True, weight_decay=5e-4)
-
+    best_acc = 0
     for epoch in range(cfg.TRAIN.epochs):
         xentropy_loss_avg = 0.
         correct = 0.
         total = 0.
         progress_bar = tqdm(train_loader)
         for i, (batch_x,batch_y) in enumerate(progress_bar):
+            progress_bar.set_description('Epoch ' + str(epoch))
+
             batch_x,batch_y = batch_x.to(cfg.TRAIN.device),batch_y.to(cfg.TRAIN.device)
 
             if cfg.DATA.mixup:
@@ -84,12 +108,32 @@ def main(cfg):
             else:
                 xentropy_loss = criterion(pred, batch_y)
 
+
             optimizer.zero_grad()
             xentropy_loss.backward()
             optimizer.step()
 
             xentropy_loss_avg += xentropy_loss.item()
-        print(xentropy_loss_avg/len(train_loader))
+            pred = torch.max(pred.data, 1)[1]
+            total += batch_y.size(0)
+            correct += (pred == batch_y.data).sum().item()
+            accuracy = correct / total
+            progress_bar.set_postfix(
+            xentropy='%.3f' % (xentropy_loss_avg / (i + 1)),
+            acc='%.3f' % accuracy)
+            wandb.log({'loss':xentropy_loss.item()})
+        test_acc = test(test_loader,model,device)
+        tqdm.write('test_acc: %.3f' % (test_acc))
+
+        row = {'epoch': epoch, 'train_acc': accuracy, 'test_acc': test_acc}
+        if accuracy>best_acc:
+            logger.info('save the model!!')
+            torch.save(model.state_dict(),  Path(cfg.MODEL.saved_path)/cfg.MODEL.name/'best_model.pt')
+            best_acc=accuracy
+        logger.info(row)
+        wandb.log(row)
+    
+    
 
             
 
