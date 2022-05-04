@@ -1,15 +1,17 @@
 MODEL:
-  name: 'ResNet-18'
+  name: 'resnet18'
 DATA:
   name: 'cifar-100'
   augmentation: False
-  cutout : True
-  cutmix : False
-  mixup : False
+  cutout : False
+  cutmix : True
+  mixup :  False
 # cutout config
 CUTOUT:
   n_holes: 1
   length: 16
 TRAIN:
-  device: 'cuda:0'
-  batch_size: 4
+  device: 'cuda:6'
+  batch_size: 256
+  epochs: 20
+  lr: 0.1

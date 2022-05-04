@@ -14,7 +14,7 @@ def load_dataset(cfg):
         train_transform.transforms.append(transforms.RandomCrop(32, padding=4))
         train_transform.transforms.append(transforms.RandomHorizontalFlip())
     train_transform.transforms.append(transforms.ToTensor())
-    train_transform.transforms.append(normalize)
+    # train_transform.transforms.append(normalize)
     if cfg.DATA.cutout:
         train_transform.transforms.append(Cutout(n_holes=cfg.CUTOUT.n_holes, length=cfg.CUTOUT.length))
 
@@ -52,5 +52,6 @@ if __name__ == '__main__':
     cfg = get_cfg_defaults()
     cfg.merge_from_file("/remote-home/rpluo/lrp_project/FDU-DeepLearningNeuralNetwork/mid-homework/configs/expriments.yaml")
     train_dataset,test_dataset,num_classes = load_dataset(cfg)
-    img = train_dataset[0]
-    print()
+    for i in range(len(train_dataset)):
+        img = train_dataset[i][0]
+        
