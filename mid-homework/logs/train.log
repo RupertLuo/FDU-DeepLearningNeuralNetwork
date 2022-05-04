@@ -324,3 +324,263 @@ TRAIN:
   num_workers: 4
   optimizer: adam
   weight_decay: 1e-05
+2022-05-04 09:42:19 - INFO - task1_train.py - 31 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: False
+  cutmix: False
+  cutout: False
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: mid-homework/trained_model/
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 256
+  device: cuda:6
+  epochs: 20
+  lr: 0.1
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-05-04 09:43:56 - INFO - task1_train.py - 31 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: False
+  cutmix: False
+  cutout: False
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: mid-homework/trained_model/
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 256
+  device: cuda:6
+  epochs: 20
+  lr: 0.1
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-05-04 10:36:44 - INFO - task1_train.py - 31 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: False
+  cutmix: False
+  cutout: False
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: mid-homework/trained_model/
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 256
+  device: cuda:6
+  epochs: 20
+  lr: 0.1
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-05-04 10:38:07 - INFO - task1_train.py - 31 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: False
+  cutmix: False
+  cutout: False
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: mid-homework/trained_model/
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 256
+  device: cuda:6
+  epochs: 20
+  lr: 0.1
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-05-04 10:39:03 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:39:04 - INFO - task1_train.py - 132 - {'epoch': 0, 'train_acc': 0.1418, 'test_acc': 0.1794}
+2022-05-04 10:39:38 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:39:39 - INFO - task1_train.py - 132 - {'epoch': 1, 'train_acc': 0.28286, 'test_acc': 0.2652}
+2022-05-04 10:40:08 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:40:09 - INFO - task1_train.py - 132 - {'epoch': 2, 'train_acc': 0.40266, 'test_acc': 0.3608}
+2022-05-04 10:40:43 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:40:44 - INFO - task1_train.py - 132 - {'epoch': 3, 'train_acc': 0.49744, 'test_acc': 0.4562}
+2022-05-04 10:41:18 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:41:19 - INFO - task1_train.py - 132 - {'epoch': 4, 'train_acc': 0.57872, 'test_acc': 0.4419}
+2022-05-04 10:41:49 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:41:49 - INFO - task1_train.py - 132 - {'epoch': 5, 'train_acc': 0.64928, 'test_acc': 0.4553}
+2022-05-04 10:42:24 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:42:24 - INFO - task1_train.py - 132 - {'epoch': 6, 'train_acc': 0.7146, 'test_acc': 0.5107}
+2022-05-04 10:42:59 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:42:59 - INFO - task1_train.py - 132 - {'epoch': 7, 'train_acc': 0.78128, 'test_acc': 0.4843}
+2022-05-04 10:43:33 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:43:34 - INFO - task1_train.py - 132 - {'epoch': 8, 'train_acc': 0.83382, 'test_acc': 0.4877}
+2022-05-04 10:44:27 - INFO - task1_train.py - 31 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: False
+  cutmix: False
+  cutout: False
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: mid-homework/trained_model/
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:6
+  epochs: 20
+  lr: 0.1
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-05-04 10:45:35 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:45:35 - INFO - task1_train.py - 133 - {'epoch': 0, 'train_acc': 0.12096, 'test_acc': 0.1674}
+2022-05-04 10:46:15 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:46:16 - INFO - task1_train.py - 133 - {'epoch': 1, 'train_acc': 0.25152, 'test_acc': 0.2573}
+2022-05-04 10:47:00 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:47:00 - INFO - task1_train.py - 133 - {'epoch': 2, 'train_acc': 0.36692, 'test_acc': 0.371}
+2022-05-04 10:47:45 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:47:45 - INFO - task1_train.py - 133 - {'epoch': 3, 'train_acc': 0.45766, 'test_acc': 0.4342}
+2022-05-04 10:48:25 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:48:25 - INFO - task1_train.py - 133 - {'epoch': 4, 'train_acc': 0.53212, 'test_acc': 0.4673}
+2022-05-04 10:49:04 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:49:05 - INFO - task1_train.py - 133 - {'epoch': 5, 'train_acc': 0.5832, 'test_acc': 0.4773}
+2022-05-04 10:49:50 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:49:51 - INFO - task1_train.py - 133 - {'epoch': 6, 'train_acc': 0.62858, 'test_acc': 0.5103}
+2022-05-04 10:50:31 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:50:31 - INFO - task1_train.py - 133 - {'epoch': 7, 'train_acc': 0.66926, 'test_acc': 0.5069}
+2022-05-04 10:51:15 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:51:16 - INFO - task1_train.py - 133 - {'epoch': 8, 'train_acc': 0.7011, 'test_acc': 0.4944}
+2022-05-04 10:52:00 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:52:00 - INFO - task1_train.py - 133 - {'epoch': 9, 'train_acc': 0.73014, 'test_acc': 0.5093}
+2022-05-04 10:52:39 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:52:39 - INFO - task1_train.py - 133 - {'epoch': 10, 'train_acc': 0.75708, 'test_acc': 0.4872}
+2022-05-04 10:53:24 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:53:24 - INFO - task1_train.py - 133 - {'epoch': 11, 'train_acc': 0.77874, 'test_acc': 0.5035}
+2022-05-04 10:54:07 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:54:07 - INFO - task1_train.py - 133 - {'epoch': 12, 'train_acc': 0.79578, 'test_acc': 0.4725}
+2022-05-04 10:54:49 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:54:50 - INFO - task1_train.py - 133 - {'epoch': 13, 'train_acc': 0.8073, 'test_acc': 0.5032}
+2022-05-04 10:55:33 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:55:34 - INFO - task1_train.py - 133 - {'epoch': 14, 'train_acc': 0.81884, 'test_acc': 0.4725}
+2022-05-04 10:56:13 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:56:13 - INFO - task1_train.py - 133 - {'epoch': 15, 'train_acc': 0.82608, 'test_acc': 0.4985}
+2022-05-04 10:56:57 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:56:58 - INFO - task1_train.py - 133 - {'epoch': 16, 'train_acc': 0.8366, 'test_acc': 0.5029}
+2022-05-04 10:57:41 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:57:41 - INFO - task1_train.py - 133 - {'epoch': 17, 'train_acc': 0.83882, 'test_acc': 0.5035}
+2022-05-04 10:58:20 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:58:21 - INFO - task1_train.py - 133 - {'epoch': 18, 'train_acc': 0.84226, 'test_acc': 0.4845}
+2022-05-04 10:59:01 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 10:59:02 - INFO - task1_train.py - 133 - {'epoch': 19, 'train_acc': 0.84608, 'test_acc': 0.4829}
+2022-05-04 11:01:26 - INFO - task1_train.py - 31 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: mid-homework/trained_model/
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:6
+  epochs: 20
+  lr: 0.1
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-05-04 11:02:30 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:02:30 - INFO - task1_train.py - 133 - {'epoch': 0, 'train_acc': 0.1181, 'test_acc': 0.1593}
+2022-05-04 11:03:15 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:03:15 - INFO - task1_train.py - 133 - {'epoch': 1, 'train_acc': 0.2404, 'test_acc': 0.2622}
+2022-05-04 11:03:55 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:03:55 - INFO - task1_train.py - 133 - {'epoch': 2, 'train_acc': 0.35468, 'test_acc': 0.3595}
+2022-05-04 11:04:40 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:04:41 - INFO - task1_train.py - 133 - {'epoch': 3, 'train_acc': 0.43588, 'test_acc': 0.4432}
+2022-05-04 11:05:25 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:05:26 - INFO - task1_train.py - 133 - {'epoch': 4, 'train_acc': 0.49766, 'test_acc': 0.4783}
+2022-05-04 11:06:06 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:06:06 - INFO - task1_train.py - 133 - {'epoch': 5, 'train_acc': 0.53202, 'test_acc': 0.4453}
+2022-05-04 11:06:51 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:06:51 - INFO - task1_train.py - 133 - {'epoch': 6, 'train_acc': 0.55908, 'test_acc': 0.5256}
+2022-05-04 11:07:30 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:07:31 - INFO - task1_train.py - 133 - {'epoch': 7, 'train_acc': 0.58024, 'test_acc': 0.5158}
+2022-05-04 11:08:16 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:08:16 - INFO - task1_train.py - 133 - {'epoch': 8, 'train_acc': 0.59676, 'test_acc': 0.528}
+2022-05-04 11:09:01 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:09:02 - INFO - task1_train.py - 133 - {'epoch': 9, 'train_acc': 0.60666, 'test_acc': 0.5147}
+2022-05-04 11:09:41 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:09:42 - INFO - task1_train.py - 133 - {'epoch': 10, 'train_acc': 0.62052, 'test_acc': 0.5113}
+2022-05-04 11:10:26 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:10:27 - INFO - task1_train.py - 133 - {'epoch': 11, 'train_acc': 0.62684, 'test_acc': 0.5479}
+2022-05-04 11:11:07 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:11:07 - INFO - task1_train.py - 133 - {'epoch': 12, 'train_acc': 0.63726, 'test_acc': 0.5204}
+2022-05-04 11:11:52 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:11:53 - INFO - task1_train.py - 133 - {'epoch': 13, 'train_acc': 0.6442, 'test_acc': 0.5519}
+2022-05-04 11:12:36 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:12:37 - INFO - task1_train.py - 133 - {'epoch': 14, 'train_acc': 0.64894, 'test_acc': 0.5857}
+2022-05-04 11:13:15 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:13:16 - INFO - task1_train.py - 133 - {'epoch': 15, 'train_acc': 0.65436, 'test_acc': 0.5319}
+2022-05-04 11:13:57 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:13:58 - INFO - task1_train.py - 133 - {'epoch': 16, 'train_acc': 0.65738, 'test_acc': 0.5667}
+2022-05-04 11:14:41 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:14:42 - INFO - task1_train.py - 133 - {'epoch': 17, 'train_acc': 0.66258, 'test_acc': 0.5505}
+2022-05-04 11:15:20 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:15:20 - INFO - task1_train.py - 133 - {'epoch': 18, 'train_acc': 0.66888, 'test_acc': 0.5552}
+2022-05-04 11:16:04 - INFO - task1_train.py - 130 - save the model!!
+2022-05-04 11:16:04 - INFO - task1_train.py - 133 - {'epoch': 19, 'train_acc': 0.67366, 'test_acc': 0.5537}

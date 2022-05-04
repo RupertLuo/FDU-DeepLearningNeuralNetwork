@@ -32,13 +32,13 @@ def prepare_config():
     model_output = Path(cfg.MODEL.saved_path)/cfg.MODEL.name
     model_output.mkdir(exist_ok =True)
     return cfg
-def test(loader,model):
+def test(loader,model,device):
     model.eval()    # Change model to 'eval' mode (BN uses moving mean/var).
     correct = 0.
     total = 0.
     for images, labels in loader:
-        images = images.cuda()
-        labels = labels.cuda()
+        images = images.to(device)
+        labels = labels.to(device)
 
         with torch.no_grad():
             pred = model(images)
@@ -122,13 +122,14 @@ def main(cfg):
             xentropy='%.3f' % (xentropy_loss_avg / (i + 1)),
             acc='%.3f' % accuracy)
             wandb.log({'loss':xentropy_loss.item()})
-        test_acc = test(test_loader)
+        test_acc = test(test_loader,model,device)
         tqdm.write('test_acc: %.3f' % (test_acc))
 
         row = {'epoch': epoch, 'train_acc': accuracy, 'test_acc': test_acc}
         if accuracy>best_acc:
             logger.info('save the model!!')
             torch.save(model.state_dict(),  Path(cfg.MODEL.saved_path)/cfg.MODEL.name/'best_model.pt')
+            best_acc=accuracy
         logger.info(row)
         wandb.log(row)
     
