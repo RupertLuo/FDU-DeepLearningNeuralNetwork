@@ -1,7 +1,7 @@
 MODEL:
   name: 'resnet18'
 DATA:
-  name: 'cifar-100'
+  name: 'VOC'
   augmentation: False
   cutout : False
   cutmix : True
