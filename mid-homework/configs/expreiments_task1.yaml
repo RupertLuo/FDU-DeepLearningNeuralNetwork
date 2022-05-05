@@ -5,13 +5,13 @@ DATA:
   augmentation: True
   cutout : False
   cutmix : False
-  mixup :  False
+  mixup :  True
 # cutout config
 CUTOUT:
   n_holes: 1
   length: 16
 TRAIN:
   device: 'cuda:6'
-  batch_size: 128
-  epochs: 20
+  batch_size: 256
+  epochs: 40
   lr: 0.1
