@@ -60,8 +60,8 @@ class VocCustomDataset(Dataset):
     def __init__(self,cfg, partition,transforms=None):
         self.transforms = transforms
         self.dir_path = Path(cfg.DATA.dir)
-        self.height = cfg.DATA.width
-        self.width = cfg.DATA.height = 416
+        self.height = cfg.DATA.height
+        self.width = cfg.DATA.width
         self.classes = cfg.DATA.classes
         self.partition = partition
 
@@ -80,7 +80,7 @@ class VocCustomDataset(Dataset):
         # read the image
         image = cv2.imread(image_path)
         # convert BGR to RGB color format
-        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
         image_resized = cv2.resize(image, (self.width, self.height))
         image_resized = image_resized/255.0
         
@@ -140,11 +140,12 @@ class VocCustomDataset(Dataset):
         target["image_id"] = image_id
 
         # apply the image transforms
+        
         if self.transforms:
             sample = self.transforms(image = image_resized,
                                      bboxes = target['boxes'],
                                      labels = labels)
-            image_resized = sample['image']
+            image_resized = sample['image'].float()
             target['boxes'] = torch.Tensor(sample['bboxes'])
             
         return image_resized, target
@@ -152,7 +153,7 @@ class VocCustomDataset(Dataset):
     def __len__(self):
         return len(self.all_img_id)
 
-def create_train_loader(cfg,train_dataset, num_workers=0):
+def create_train_loader(cfg,train_dataset):
     train_loader = DataLoader(
         train_dataset,
         batch_size=cfg.TRAIN.batch_size,
@@ -161,7 +162,7 @@ def create_train_loader(cfg,train_dataset, num_workers=0):
         collate_fn=collate_fn
     )
     return train_loader
-def create_valid_loader(cfg,valid_dataset, num_workers=0):
+def create_valid_loader(cfg,valid_dataset):
     valid_loader = DataLoader(
         valid_dataset,
         batch_size=cfg.TRAIN.batch_size,
