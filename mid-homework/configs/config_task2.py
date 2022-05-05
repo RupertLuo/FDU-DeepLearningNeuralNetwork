@@ -8,7 +8,10 @@ _C.DATA.name = 'VOC'
 _C.DATA.dir = 'mid-homework/dataset/VOCdevkit/VOC2007'
 _C.DATA.width = 416
 _C.DATA.height = 416
-_C.DATA.classes = 20
+_C.DATA.classes = ['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
+           'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse',
+           'motorbike', 'person', 'pottedplant', 'sheep', 'sofa',
+           'train', 'tvmonitor']
 
 
 # MODEL config
