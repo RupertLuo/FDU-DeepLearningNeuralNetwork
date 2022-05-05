@@ -18,7 +18,7 @@ import wandb
 def prepare_config():
     # set seeds
     cfg = get_cfg_defaults()
-    cfg.merge_from_file("/remote-home/rpluo/lrp_project/FDU-DeepLearningNeuralNetwork/mid-homework/configs/experiments_task1.yaml")
+    cfg.merge_from_file("mid-homework/configs/expreiments_task1.yaml")
     cfg.freeze()
     torch.manual_seed(cfg.RANDOM_SEED)
     random.seed(cfg.RANDOM_SEED)
@@ -29,7 +29,7 @@ def prepare_config():
         format='{time:YYYY-MM-DD HH:mm:ss} - {level} - {file} - {line} - {message}',
         rotation="10 MB")
     logger.info("Train config: %s" % str(cfg))
-    model_output = Path(cfg.MODEL.saved_path)/cfg.MODEL.name+"_"+str((cfg.DATA.augmentation,cfg.DATA.cutout,cfg.DATA.cutmix,cfg.DATA.mixup))
+    model_output = Path(cfg.MODEL.saved_path)/(cfg.MODEL.name+"_"+str((cfg.DATA.augmentation,cfg.DATA.cutout,cfg.DATA.cutmix,cfg.DATA.mixup)))
     model_output.mkdir(exist_ok =True)
     return cfg
 def test(loader,model,device):
