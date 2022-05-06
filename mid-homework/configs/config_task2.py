@@ -29,7 +29,7 @@ _C.TRAIN.batch_size = 20
 _C.TRAIN.lr = 1e-3
 _C.TRAIN.weight_decay = 1e-5
 _C.TRAIN.epochs = 50
-_C.TRAIN.device = 'cuda:6'
+_C.TRAIN.device = 'cuda:0'
 
 def get_cfg_defaults():
   """Get a yacs CfgNode object with default values for my_project."""

@@ -1,0 +1,3 @@
+TRAIN:
+  device: 'cuda:7'
+  batch_size: 1

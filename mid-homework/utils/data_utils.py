@@ -1,5 +1,6 @@
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
+import cv2
 def collate_fn(batch):
     """
     To handle the data loading as different images may have different number 
@@ -29,3 +30,27 @@ def get_valid_transform():
         'format': 'pascal_voc', 
         'label_fields': ['labels']
     })
+def draw_box(orig_image,draw_boxes,pred_classes,CLASSES,COLORS,label = False):
+    """
+    [input]: origin_image: cv2 format image
+             draw_boxes: a list contains boxes, like [[1,2,4,5],[3,4,7,8]]
+             pred_classes: a list contains class_id of each box
+             CLASSES: list of all Classname, 
+             COLORS: rand_color_id list , COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
+    """
+    for j, box in enumerate(draw_boxes):
+        
+        if label:
+            class_name = pred_classes[j]
+            color = COLORS[CLASSES.index(class_name)]
+            cv2.putText(orig_image, class_name, 
+                        (int(box[0]), int(box[1]-5)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 
+                        2, lineType=cv2.LINE_AA)
+        else:
+            color = COLORS[5]
+            cv2.rectangle(orig_image,
+                    (int(box[0]), int(box[1])),
+                    (int(box[2]), int(box[3])),
+                    color, 1)
+            

@@ -81,6 +81,7 @@ class VocCustomDataset(Dataset):
         image = cv2.imread(image_path)
         # convert BGR to RGB color format
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
+        ori_h,ori_w,_ = image.shape
         image_resized = cv2.resize(image, (self.width, self.height))
         image_resized = image_resized/255.0
         
@@ -138,6 +139,8 @@ class VocCustomDataset(Dataset):
         target["iscrowd"] = iscrowd
         image_id = torch.tensor([idx])
         target["image_id"] = image_id
+        target["image_name"] = image_name
+        target["origin_shape"] = (ori_w,ori_h)
 
         # apply the image transforms
         
@@ -166,7 +169,7 @@ def create_valid_loader(cfg,valid_dataset):
     valid_loader = DataLoader(
         valid_dataset,
         batch_size=cfg.TRAIN.batch_size,
-        shuffle=False,
+        shuffle=True,
         num_workers=cfg.TRAIN.num_workers,
         collate_fn=collate_fn
     )
