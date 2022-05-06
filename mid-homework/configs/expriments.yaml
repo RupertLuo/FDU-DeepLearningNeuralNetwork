@@ -3,8 +3,6 @@ MODEL:
 DATA:
   name: 'VOC'
   augmentation: False
-  name: 'cifar-100'
-  augmentation: True
   cutout : False
   cutmix : False
   mixup :  False
@@ -13,7 +11,7 @@ CUTOUT:
   n_holes: 1
   length: 16
 TRAIN:
-  device: 'cuda:6'
+  device: 'cuda:0'
   batch_size: 128
   epochs: 20
   lr: 0.1
