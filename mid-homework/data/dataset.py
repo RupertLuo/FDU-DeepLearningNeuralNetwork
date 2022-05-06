@@ -174,14 +174,10 @@ def create_valid_loader(cfg,valid_dataset):
         collate_fn=collate_fn
     )
     return valid_loader
+
 if __name__ == '__main__':
     cfg = get_cfg_defaults2()
     cfg.merge_from_file("mid-homework/configs/experiments_task2.yaml")
     dataset = VocCustomDataset(cfg,'trainval')
     for i in tqdm(range(len(dataset))):
         data = dataset[0]
-
-
-    
-    
-        
