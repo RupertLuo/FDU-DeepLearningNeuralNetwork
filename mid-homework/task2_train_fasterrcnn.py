@@ -80,6 +80,7 @@ def main(cfg):
             prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
 
         # save the best model till now if we have the least loss in the...
+        logger.info(f"\nEPOCH loss: {sum(loss_list)/len(loss_list)}")
         if sum(loss_list)/len(loss_list) < min_loss:
             logger.info("save_model!!")
             torch.save(model.state_dict(),  Path(cfg.MODEL.saved_path)/cfg.MODEL.name/'best_model.pt')

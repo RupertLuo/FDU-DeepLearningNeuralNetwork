@@ -23,11 +23,11 @@ def load_cifar_dataset(cfg):
     train_transform.transforms.append(transforms.ToTensor())
     test_transform = transforms.Compose([
         transforms.ToTensor()])
-    if cfg.DATA.name[:5:] == 'cifar':
-        normalize = transforms.Normalize(mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
-                                    std=[x / 255.0 for x in [63.0, 62.1, 66.7]])
-        train_transform.transforms.append(normalize)
-        test_transform.transforms.append(normalize)
+    # if cfg.DATA.name[:5:] == 'cifar':
+    #     normalize = transforms.Normalize(mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
+    #                                 std=[x / 255.0 for x in [63.0, 62.1, 66.7]])
+    #     train_transform.transforms.append(normalize)
+    #     test_transform.transforms.append(normalize)
     if cfg.DATA.cutout:
         train_transform.transforms.append(Cutout(n_holes=cfg.CUTOUT.n_holes, length=cfg.CUTOUT.length))
     

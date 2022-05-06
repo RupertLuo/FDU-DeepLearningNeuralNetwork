@@ -23,10 +23,10 @@ _C.MODEL.saved_path = 'mid-homework/trained_model/'
 
 # train config
 _C.TRAIN = CN()
-_C.TRAIN.num_workers = 16
-_C.TRAIN.optimizer = 'adam'
-_C.TRAIN.batch_size = 16
-_C.TRAIN.lr = 5e-4
+_C.TRAIN.num_workers = 0
+_C.TRAIN.optimizer = 'SGD'
+_C.TRAIN.batch_size = 20
+_C.TRAIN.lr = 1e-3
 _C.TRAIN.weight_decay = 1e-5
 _C.TRAIN.epochs = 50
 _C.TRAIN.device = 'cuda:6'

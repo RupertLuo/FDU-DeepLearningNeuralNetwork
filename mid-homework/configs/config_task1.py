@@ -5,8 +5,8 @@ _C.LOG_PATH = 'mid-homework/logs/train.log'
 # DATA config
 _C.DATA = CN()
 _C.DATA.name = 'cifar-100'
-_C.DATA.augmentation = True
-_C.DATA.cutout = True
+_C.DATA.augmentation = False
+_C.DATA.cutout = False
 _C.DATA.cutmix = False
 _C.DATA.mixup = False
 

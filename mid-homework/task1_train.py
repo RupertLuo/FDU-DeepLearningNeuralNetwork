@@ -6,19 +6,19 @@ import random
 from pathlib import Path
 import wandb
 from configs.config_task1 import get_cfg_defaults
-import torchvision
-import torchvision.transforms as transforms
 from data.argument_type import Mixup,Cutmix
-from data.dataset import load_dataset
-from torchvision import datasets, transforms
+from data.dataset import load_cifar_dataset
 from model.resnet import ResNet18
 import torch.nn as nn
 from tqdm import tqdm
 import wandb
+import sys
 def prepare_config():
     # set seeds
     cfg = get_cfg_defaults()
     cfg.merge_from_file("mid-homework/configs/expreiments_task1.yaml")
+    opts = [arg=='True' if i%2==1 else arg for i,arg in enumerate(sys.argv[1:])]
+    cfg.merge_from_list(opts)
     cfg.freeze()
     torch.manual_seed(cfg.RANDOM_SEED)
     random.seed(cfg.RANDOM_SEED)
@@ -53,7 +53,7 @@ def test(loader,model,device):
 def main(cfg):
     wandb.init(project="mid-homework-task1", entity="rupert_luo")
     device = cfg.TRAIN.device
-    train_dataset,test_dataset,num_classes = load_dataset(cfg)
+    train_dataset,test_dataset,num_classes = load_cifar_dataset(cfg)
     # Data Loader (Input Pipeline)
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                             batch_size=cfg.TRAIN.batch_size,
@@ -115,6 +115,13 @@ def main(cfg):
 
             xentropy_loss_avg += xentropy_loss.item()
             pred = torch.max(pred.data, 1)[1]
+            if cfg.DATA.mixup or cfg.DATA.cutmix:
+                if lam!= None:
+                    rand_num = np.random.uniform()
+                    if rand_num<lam:
+                        batch_y = batch_y[0]
+                    else:
+                        batch_y = batch_y[1]
             total += batch_y.size(0)
             correct += (pred == batch_y.data).sum().item()
             accuracy = correct / total
@@ -128,7 +135,7 @@ def main(cfg):
         row = {'epoch': epoch, 'train_acc': accuracy, 'test_acc': test_acc}
         if accuracy>best_acc:
             logger.info('save the model!!')
-            torch.save(model.state_dict(),  Path(cfg.MODEL.saved_path)/cfg.MODEL.name/'best_model.pt')
+            torch.save(model.state_dict(),  Path(cfg.MODEL.saved_path)/(cfg.MODEL.name+"_"+str((cfg.DATA.augmentation,cfg.DATA.cutout,cfg.DATA.cutmix,cfg.DATA.mixup)))/'best_model.pt')
             best_acc=accuracy
         logger.info(row)
         wandb.log(row)
