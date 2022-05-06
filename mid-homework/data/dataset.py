@@ -23,11 +23,11 @@ def load_cifar_dataset(cfg):
     train_transform.transforms.append(transforms.ToTensor())
     test_transform = transforms.Compose([
         transforms.ToTensor()])
-    if cfg.DATA.name[:5:] == 'cifar':
-        normalize = transforms.Normalize(mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
-                                    std=[x / 255.0 for x in [63.0, 62.1, 66.7]])
-        train_transform.transforms.append(normalize)
-        test_transform.transforms.append(normalize)
+    # if cfg.DATA.name[:5:] == 'cifar':
+    #     normalize = transforms.Normalize(mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
+    #                                 std=[x / 255.0 for x in [63.0, 62.1, 66.7]])
+    #     train_transform.transforms.append(normalize)
+    #     test_transform.transforms.append(normalize)
     if cfg.DATA.cutout:
         train_transform.transforms.append(Cutout(n_holes=cfg.CUTOUT.n_holes, length=cfg.CUTOUT.length))
     
@@ -57,11 +57,11 @@ def load_cifar_dataset(cfg):
     return train_dataset,test_dataset,num_classes
 
 class VocCustomDataset(Dataset):
-    def __init__(self, cfg, partition,transforms=None):
+    def __init__(self,cfg, partition,transforms=None):
         self.transforms = transforms
         self.dir_path = Path(cfg.DATA.dir)
-        self.height = cfg.DATA.width
-        self.width = cfg.DATA.height = 416
+        self.height = cfg.DATA.height
+        self.width = cfg.DATA.width
         self.classes = cfg.DATA.classes
         self.partition = partition
 
@@ -80,7 +80,8 @@ class VocCustomDataset(Dataset):
         # read the image
         image = cv2.imread(image_path)
         # convert BGR to RGB color format
-        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
+        ori_h,ori_w,_ = image.shape
         image_resized = cv2.resize(image, (self.width, self.height))
         image_resized = image_resized/255.0
         
@@ -138,24 +139,24 @@ class VocCustomDataset(Dataset):
         target["iscrowd"] = iscrowd
         image_id = torch.tensor([idx])
         target["image_id"] = image_id
+        target["image_name"] = image_name
+        target["origin_shape"] = (ori_w,ori_h)
 
         # apply the image transforms
+        
         if self.transforms:
             sample = self.transforms(image = image_resized,
                                      bboxes = target['boxes'],
                                      labels = labels)
-            image_resized = sample['image']
+            image_resized = sample['image'].float()
             target['boxes'] = torch.Tensor(sample['bboxes'])
             
         return image_resized, target
 
     def __len__(self):
         return len(self.all_img_id)
-    
 
-    
-    
-def create_train_loader(cfg,train_dataset, num_workers=0):
+def create_train_loader(cfg,train_dataset):
     train_loader = DataLoader(
         train_dataset,
         batch_size=cfg.TRAIN.batch_size,
@@ -164,11 +165,11 @@ def create_train_loader(cfg,train_dataset, num_workers=0):
         collate_fn=collate_fn
     )
     return train_loader
-def create_valid_loader(cfg,valid_dataset, num_workers=0):
+def create_valid_loader(cfg,valid_dataset):
     valid_loader = DataLoader(
         valid_dataset,
         batch_size=cfg.TRAIN.batch_size,
-        shuffle=False,
+        shuffle=True,
         num_workers=cfg.TRAIN.num_workers,
         collate_fn=collate_fn
     )

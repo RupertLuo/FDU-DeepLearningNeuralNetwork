@@ -1,8 +1,8 @@
 MODEL:
   name: 'resnet18'
 DATA:
-  name: 'VOC'
-  augmentation: False
+  name: 'cifar-100'
+  augmentation: True
   cutout : False
   cutmix : False
   mixup :  False
@@ -13,5 +13,5 @@ CUTOUT:
 TRAIN:
   device: 'cuda:0'
   batch_size: 128
-  epochs: 20
-  lr: 0.1
+  epochs: 50
+  lr: 0.001
