@@ -59,7 +59,7 @@ def main(cfg):
     test_dataset = VocCustomDataset(cfg,'test',get_valid_transform())
     
     test_loader = create_valid_loader(cfg,test_dataset)
-
+    bbox_util = DecodeBox(cfg.MODEL["ANCHORS"], num_classes = len(cfg.DATA["classes"]), input_shape = (cfg.DATA["width"], cfg.DATA["height"]), anchors_mask = [[6, 7, 8], [3, 4, 5], [0, 1, 2]])
     # define the detection threshold...
     # ... any detection having score below this will be discarded
     detection_threshold = 0.8
@@ -81,8 +81,12 @@ def main(cfg):
         
         # make the pixel range between 0 and 1
         start_time = time.time()
+        image_shape = np.array(np.shape(img)[0:2])
         with torch.no_grad():
             outputs = model(img)
+            outputs = bbox_util.decode_box(outputs)
+            results = bbox_util.non_max_suppression(torch.cat(outputs, 1), num_classes = len(cfg.DATA["classes"]), input_shape = (cfg.DATA["width"], cfg.DATA["height"]), 
+                        image_shape = image_shape, letterbox_image = False, conf_thres = 0.5, nms_thres = 0.3)
         end_time = time.time()
 
         # get the current fps
