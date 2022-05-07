@@ -91,21 +91,19 @@ def main(cfg):
 
             out = model(images_list) 
             loss_value_all = 0
-            loss_all = loss_loc_all = loss_cls_all = loss_conf_all = 0
+            loss_all = 0
             
             for l in range(len(out)):
-                loss_item, loss_loc, loss_cls, loss_conf = criterion(l, out[l], boxes_list)
+                loss_item = criterion(l, out[l], boxes_list)
                 loss_value_all  += loss_item
                 loss_all += loss_item.item()
-                loss_loc_all += loss_loc.item()
-                loss_cls_all += loss_cls.item()
-                loss_conf_all += loss_conf.item()
+
             loss_list.append(loss_value_all.item())
             optimizer.zero_grad()
             loss_value_all.backward()
             optimizer.step()
             # update the loss value beside the progress bar for each iteration
-            wandb.log({"train_loss":loss_all, "giou_loss":loss_loc_all, "conf_loss":loss_conf_all, "cls_loss":loss_cls_all})
+            wandb.log({"train_loss":loss_all})
             prog_bar.set_description(desc=f"Loss: {loss_all:.4f}")
         # save the best model till now if we have the least loss in the...
         if sum(loss_list)/len(loss_list) < min_loss:
