@@ -7,7 +7,7 @@ import numpy as np
 class DecodeBox():
     def __init__(self, anchors, num_classes, input_shape, anchors_mask = [[6,7,8], [3,4,5], [0,1,2]]):
         super(DecodeBox, self).__init__()
-        self.anchors        = anchors
+        self.anchors        = np.array(anchors)
         self.num_classes    = num_classes
         self.bbox_attrs     = 5 + num_classes
         self.input_shape    = input_shape
@@ -120,17 +120,6 @@ class DecodeBox():
         input_shape = np.array(input_shape)
         image_shape = np.array(image_shape)
 
-        if letterbox_image:
-            #-----------------------------------------------------------------#
-            #   这里求出来的offset是图像有效区域相对于图像左上角的偏移情况
-            #   new_shape指的是宽高缩放情况
-            #-----------------------------------------------------------------#
-            new_shape = np.round(image_shape * np.min(input_shape/image_shape))
-            offset  = (input_shape - new_shape)/2./input_shape
-            scale   = input_shape/new_shape
-
-            box_yx  = (box_yx - offset) * scale
-            box_hw *= scale
 
         box_mins    = box_yx - (box_hw / 2.)
         box_maxes   = box_yx + (box_hw / 2.)
@@ -138,7 +127,7 @@ class DecodeBox():
         boxes *= np.concatenate([image_shape, image_shape], axis=-1)
         return boxes
 
-    def non_max_suppression(self, prediction, num_classes, input_shape, image_shape, letterbox_image, conf_thres=0.5, nms_thres=0.4):
+    def non_max_suppression(self, prediction, num_classes, input_shape, image_shape, letterbox_image, conf_thres=0.5, nms_thres=0.6):
         #----------------------------------------------------------#
         #   将预测结果的格式转换成左上角右下角的格式。
         #   prediction  [batch_size, num_anchors, 85]
@@ -162,11 +151,19 @@ class DecodeBox():
             #----------------------------------------------------------#
             #   利用置信度进行第一轮筛选
             #----------------------------------------------------------#
-            conf_mask = (image_pred[:, 4] * class_conf[:, 0] >= conf_thres).squeeze()
-
+            conf_mask_1 = (image_pred[:, 4] * class_conf[:, 0] >= 0.1).squeeze()
+            conf_mask_2 = (class_conf[:, 0] >= conf_thres).squeeze()
+            conf_mask = conf_mask_1 * conf_mask_2
             #----------------------------------------------------------#
             #   根据置信度进行预测结果的筛选
             #----------------------------------------------------------#
+            if torch.sum(conf_mask) == 0:
+                max_class = torch.max(class_conf[:, 0])
+                max_ind = torch.max(image_pred[:, 4])
+                conf_mask_1 = (image_pred[:, 4] == max_ind).squeeze()
+                conf_mask_2 = (class_conf[:, 0] == max_class).squeeze()
+                #conf_mask = conf_mask_1 + conf_mask_2 ^ (conf_mask_1 * conf_mask_2)
+                conf_mask = conf_mask_1
             image_pred = image_pred[conf_mask]
             class_conf = class_conf[conf_mask]
             class_pred = class_pred[conf_mask]
@@ -196,13 +193,20 @@ class DecodeBox():
                 #------------------------------------------#
                 #   使用官方自带的非极大抑制会速度更快一些！
                 #------------------------------------------#
+                
                 keep = nms(
                     detections_class[:, :4],
                     detections_class[:, 4] * detections_class[:, 5],
                     nms_thres
                 )
                 max_detections = detections_class[keep]
-                
+                '''
+                max_value, indices = torch.sort(detections_class[:, 5], 0, descending=True)
+                if indices.shape[0] > 3:
+                    max_detections = detections_class[indices[:3:]]
+                else:
+                    max_detections = detections_class
+                '''
                 # # 按照存在物体的置信度排序
                 # _, conf_sort_index = torch.sort(detections_class[:, 4]*detections_class[:, 5], descending=True)
                 # detections_class = detections_class[conf_sort_index]

@@ -55,11 +55,11 @@ def draw_box(orig_image,draw_boxes,pred_classes,scores,CLASSES,COLORS,label = Fa
             cv2.putText(orig_image, class_name, 
                         (int(box[0]), int(box[1]-5)),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 
-                        2, lineType=cv2.LINE_AA)
+                        1, lineType=cv2.LINE_AA)
             cv2.putText(orig_image, str(class_score), 
                         (int(box[0]+50), int(box[1])),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, COLORS[5], 
-                        2, lineType=cv2.LINE_AA)
+                        1, lineType=cv2.LINE_AA)
         else:
             color = COLORS[5]
         
@@ -67,4 +67,3 @@ def draw_box(orig_image,draw_boxes,pred_classes,scores,CLASSES,COLORS,label = Fa
                 (int(box[0]), int(box[1])),
                 (int(box[2]), int(box[3])),
                 color, 2)
-        

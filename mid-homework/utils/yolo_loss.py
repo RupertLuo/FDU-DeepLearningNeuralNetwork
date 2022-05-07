@@ -205,8 +205,8 @@ class YOLOLoss(nn.Module):
         loss        += loss_conf * self.balance[l] * self.obj_ratio
         # if n != 0:
         #     print(loss_loc * self.box_ratio, loss_cls * self.cls_ratio, loss_conf * self.balance[l] * self.obj_ratio)
-        return loss, loss_loc, loss_cls, loss_conf
-
+        return loss
+    
     def calculate_iou(self, _box_a, _box_b):
         #-----------------------------------------------------------#
         #   计算真实框的左上角和右下角
