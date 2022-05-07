@@ -38,7 +38,7 @@ def get_valid_transform():
         'format': 'pascal_voc', 
         'label_fields': ['labels']
     })
-def draw_box(orig_image,draw_boxes,pred_classes,CLASSES,COLORS,label = False):
+def draw_box(orig_image,draw_boxes,pred_classes,scores,CLASSES,COLORS,label = False):
     """
     [input]: origin_image: cv2 format image
              draw_boxes: a list contains boxes, like [[1,2,4,5],[3,4,7,8]]
@@ -50,15 +50,21 @@ def draw_box(orig_image,draw_boxes,pred_classes,CLASSES,COLORS,label = False):
         
         if label:
             class_name = pred_classes[j]
+            class_score = scores[j]
             color = COLORS[CLASSES.index(class_name)]
             cv2.putText(orig_image, class_name, 
                         (int(box[0]), int(box[1]-5)),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 
                         2, lineType=cv2.LINE_AA)
+            cv2.putText(orig_image, str(class_score), 
+                        (int(box[0]+50), int(box[1])),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, COLORS[5], 
+                        2, lineType=cv2.LINE_AA)
         else:
             color = COLORS[5]
-            cv2.rectangle(orig_image,
-                    (int(box[0]), int(box[1])),
-                    (int(box[2]), int(box[3])),
-                    color, 1)
-            
+        
+        cv2.rectangle(orig_image,
+                (int(box[0]), int(box[1])),
+                (int(box[2]), int(box[3])),
+                color, 2)
+        
