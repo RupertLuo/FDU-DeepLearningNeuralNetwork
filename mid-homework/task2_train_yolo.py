@@ -18,7 +18,7 @@ import wandb
 def prepare_config():
     # set seeds
     cfg = get_cfg_defaults()
-    cfg.merge_from_file(".//configs/experiments_task2.yaml")
+    cfg.merge_from_file(".//mid-homework//configs/experiments_task2.yaml")
     cfg.freeze()
     torch.manual_seed(cfg.RANDOM_SEED)
     random.seed(cfg.RANDOM_SEED)

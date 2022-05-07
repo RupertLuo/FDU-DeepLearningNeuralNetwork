@@ -1,5 +1,6 @@
 from yacs.config import CfgNode as CN
 _C = CN()
+import numpy as np
 _C.RANDOM_SEED = 44
 _C.LOG_PATH = 'mid-homework/logs/train.log'
 # DATA config
@@ -16,9 +17,12 @@ _C.DATA.num_classes = len(_C.DATA.classes)
 
 # MODEL config
 _C.MODEL = CN()
-_C.MODEL.name = 'faster_rcnn'
-_C.MODEL.saved_path = 'mid-homework/trained_model/'
-
+_C.MODEL.name = 'YOLOv3'
+_C.MODEL.saved_path = './/mid-homework/trained_model/'
+_C.MODEL.pretrained_path = './/mid-homework/trained_model/darknet53_backbone_weights.pth'
+_C.MODEL.ANCHORS = [np.array([10.,13.]),  np.array([16.,30.]),  np.array([33.,23.]),  np.array([30.,61.]),  np.array([62.,45.]),  np.array([59.,119.]),  np.array([116.,90.]),  np.array([156.,198.]),  np.array([373.,326.])]
+_C.MODEL.STRIDES = [8, 16, 32]
+_C.MODEL.ANCHORS_PER_SCLAE = 3
 
 
 # train config
