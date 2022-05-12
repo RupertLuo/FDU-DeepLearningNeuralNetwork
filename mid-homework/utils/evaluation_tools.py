@@ -75,6 +75,7 @@ if __name__ == "__main__":
     for i in range(3):
         bb = BoundingBox.of_bbox(None,category = pre_class[i],xtl = pre[i][0],ytl = pre[i][1],xbr = pre[i][2], ybr = pre[i][3],score = pre_score[i])
         pre_boxes.append(bb)
+        
     for i in range(3):
         bb = BoundingBox.of_bbox(None,category = taget_class[i],xtl = target[i][0],ytl = target[i][1],xbr = target[i][2], ybr = target[i][3])
         target_boxes.append(bb)
