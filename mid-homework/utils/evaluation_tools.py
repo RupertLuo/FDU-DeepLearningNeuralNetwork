@@ -1,4 +1,7 @@
 import torch
+from podm.metrics import get_pascal_voc_metrics, MetricPerClass, get_bounding_boxes,BoundingBox
+from podm.metrics import MetricPerClass
+
 import numpy as np
 def calculate_iou(box_a, box_b):
     # box_a: (num, 4) ----- number of boxes, (x1y1x2y2)
@@ -61,9 +64,22 @@ def calculate_iou(box_a, box_b):
     return iou, giou  # [A,B]
 
 if __name__ == "__main__":
-    box_a = np.array([[10, 20, 100, 110], [5, 24, 200,250], [125, 164, 205, 175]])
-    box_b = np.array([[20, 20, 110, 110], [25, 5, 250,200], [145, 162, 199, 205]])
-    box_a_tensor = torch.Tensor(box_a)
-    box_b_tensor = torch.Tensor(box_b)
-    iou, giou = calculate_iou(box_a_tensor, box_b_tensor)
-    print(iou, giou)
+    pre_boxes = []
+    target_boxes = []
+    pre = [[10, 20, 100, 110], [5, 24, 200,250], [125, 164, 205, 175]]
+    target = [[20, 20, 110, 110], [25, 5, 250,200], [145, 162, 199, 205]]
+    taget_class = [1,3,4]
+    pre_class = [1,4,3]
+    pre_score = [0.7,0.6,0.8]
+
+    for i in range(3):
+        bb = BoundingBox.of_bbox(None,category = pre_class[i],xtl = pre[i][0],ytl = pre[i][1],xbr = pre[i][2], ybr = pre[i][3],score = pre_score[i])
+        pre_boxes.append(bb)
+    for i in range(3):
+        bb = BoundingBox.of_bbox(None,category = taget_class[i],xtl = target[i][0],ytl = target[i][1],xbr = target[i][2], ybr = target[i][3])
+        target_boxes.append(bb)
+
+    
+    results = get_pascal_voc_metrics(target_boxes, pre_boxes, .5)
+    mAP = MetricPerClass.mAP(results)
+    print(mAP)
