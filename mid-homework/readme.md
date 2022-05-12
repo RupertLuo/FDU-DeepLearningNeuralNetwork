@@ -12,4 +12,4 @@
     - 运行 task2_inference_fasterrcnn.py, 并设置 46行 drawproposal= True, 能够可视化testset中图像在模型第一阶段输出的proposal_box，并保存在imgs/task2_output中
     - 分别运行 task2_inference_fasterrcnn.py 和 task2_inference_yolo.py, 能够可视化几张不在VOC2007数据集中的图像的物体检测结果，图像保存在 imgs/task3 中
 
-各训练好的模型网盘地址为： 
+各训练好的模型网盘地址为： https://drive.google.com/drive/folders/1S22IpvYl8s2Y9YMkccBXKSIJBd1prQDU?usp=sharing
