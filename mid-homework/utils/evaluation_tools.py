@@ -1,7 +1,7 @@
 import torch
 from podm.metrics import get_pascal_voc_metrics, MetricPerClass, get_bounding_boxes,BoundingBox
 from podm.metrics import MetricPerClass
-
+from podm.box import Box, intersection_over_union
 import numpy as np
 def calculate_iou(box_a, box_b):
     # box_a: (num, 4) ----- number of boxes, (x1y1x2y2)
@@ -62,6 +62,19 @@ def calculate_iou(box_a, box_b):
     giou            = iou - (enclose_area - torch.diag(union)) / enclose_area
     
     return iou, giou  # [A,B]
+def get_mIOU(pre_boxes,target_boxes,iou_threshold):
+    mIOU_list_each = []
+    matched_target = []
+    for k in range(len(pre_boxes)):
+        for j in range(len(target_boxes)):
+            box1 = Box.of_box(pre_boxes[k][0], pre_boxes[k][1], pre_boxes[k][2], pre_boxes[k][3])
+            box2 = Box.of_box(target_boxes[j][0], target_boxes[j][1], target_boxes[j][2], target_boxes[j][3])
+            IOU = intersection_over_union(box1, box2)
+            if IOU >= iou_threshold and j not in matched_target:
+                matched_target.append(j)
+                mIOU_list_each.append(IOU)
+    mIOU = sum(mIOU_list_each) / (len(mIOU_list_each)+1e-5)
+    return mIOU
 def get_mAP(pre_class,pre_boxes,pre_scores,target_class,target_boxes,iou_threshold):
     '''
     pre_class = [1,4,3]
@@ -83,8 +96,13 @@ def get_mAP(pre_class,pre_boxes,pre_scores,target_class,target_boxes,iou_thresho
     #   计算mAP
     #----------------------------------------------------#
     results = get_pascal_voc_metrics(target_box, pre_box, iou_threshold)
+    tps_list = []
+    for cls, metric in results.items():
+        tps_list.append(metric.tp)
+    tp = sum(tps_list)/len(tps_list)
+    acc = tp / (len(pre_class)+1e-5)
     mAP = MetricPerClass.mAP(results)
-    return mAP
+    return mAP,acc
 
 
 
