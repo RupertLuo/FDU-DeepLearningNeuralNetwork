@@ -113,6 +113,8 @@ def main(cfg):
                 draw_box(orig_image,draw_boxes,pred_classes,CLASSES,COLORS,label=True)
                 cv2.waitKey(1)
                 cv2.imwrite(f"mid-homework/imgs/task2_output/test/{test_label['image_name']}.jpg", orig_image)
+                if i >3:
+                    break
         else:
             if len(outputs[0]['proposals'])!=0:
                 scores = outputs[0]['proposals_score']
@@ -134,8 +136,7 @@ def main(cfg):
                 cv2.imwrite(f"mid-homework/imgs/task2_output/proposal_box_test/{test_label['image_name']}.jpg", orig_image)
         print(f"Image {i+1} done...")
         print('-'*50)
-        if i >3:
-            break
+
 
     print('TEST PREDICTIONS COMPLETE')
     cv2.destroyAllWindows()
