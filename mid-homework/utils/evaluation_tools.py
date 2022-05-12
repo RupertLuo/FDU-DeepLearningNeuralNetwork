@@ -62,25 +62,40 @@ def calculate_iou(box_a, box_b):
     giou            = iou - (enclose_area - torch.diag(union)) / enclose_area
     
     return iou, giou  # [A,B]
+def get_mAP(pre_class,pre_boxes,pre_scores,target_class,target_boxes,iou_threshold):
+    '''
+    pre_class = [1,4,3]
+    pre_boxes = [[10, 20, 100, 110], [5, 24, 200,250], [125, 164, 205, 175]]
+    pre_scores = [0.4,0.5,0.9]
+    taget_class = [1,3,4]
+    target_boxes = [[20, 20, 110, 110], [25, 5, 250,200], [145, 162, 199, 205]]
+    '''
+    pre_box = []
+    for i in range(len(pre_class)):
+        bb = BoundingBox.of_bbox(None,category = pre_class[i],xtl = pre_boxes[i][0],ytl = pre_boxes[i][1],xbr = pre_boxes[i][2], ybr = pre_boxes[i][3],score = pre_scores[i])
+        pre_box.append(bb)
+    
+    target_box = []
+    for i in range(len(target_class)):
+        bb = BoundingBox.of_bbox(None,category = target_class[i],xtl = target_boxes[i][0],ytl = target_boxes[i][1],xbr = target_boxes[i][2], ybr = target_boxes[i][3])
+        target_box.append(bb)
+    #----------------------------------------------------#
+    #   计算mAP
+    #----------------------------------------------------#
+    results = get_pascal_voc_metrics(target_box, pre_box, iou_threshold)
+    mAP = MetricPerClass.mAP(results)
+    return mAP
 
+
+
+
+
+
+    
 if __name__ == "__main__":
-    pre_boxes = []
-    target_boxes = []
     pre = [[10, 20, 100, 110], [5, 24, 200,250], [125, 164, 205, 175]]
     target = [[20, 20, 110, 110], [25, 5, 250,200], [145, 162, 199, 205]]
     taget_class = [1,3,4]
     pre_class = [1,4,3]
-    pre_score = [0.7,0.6,0.8]
-
-    for i in range(3):
-        bb = BoundingBox.of_bbox(None,category = pre_class[i],xtl = pre[i][0],ytl = pre[i][1],xbr = pre[i][2], ybr = pre[i][3],score = pre_score[i])
-        pre_boxes.append(bb)
-        
-    for i in range(3):
-        bb = BoundingBox.of_bbox(None,category = taget_class[i],xtl = target[i][0],ytl = target[i][1],xbr = target[i][2], ybr = target[i][3])
-        target_boxes.append(bb)
-
-    
-    results = get_pascal_voc_metrics(target_boxes, pre_boxes, .5)
-    mAP = MetricPerClass.mAP(results)
+    mAP = get_mAP(pre_class,pre,taget_class,target)
     print(mAP)
