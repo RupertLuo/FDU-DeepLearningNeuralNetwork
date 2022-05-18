@@ -11,7 +11,7 @@ import numpy as np
 from loguru import logger
 from pathlib import Path
 import time
-import wandb
+# import wandb
 def prepare_config():
     # set seeds
     cfg = get_cfg_defaults()
@@ -33,7 +33,7 @@ def prepare_config():
 
     
 def main(cfg):
-    wandb.init(project="mid-homework-task2", entity="rupert_luo")
+    # wandb.init(project="mid-homework-task2", entity="rupert_luo")
     train_dataset = VocCustomDataset(cfg,'trainval',get_train_transform())
     valid_dataset = VocCustomDataset(cfg,'test',get_valid_transform())
     train_loader = create_train_loader(cfg,train_dataset)
@@ -54,31 +54,47 @@ def main(cfg):
         optimizer = torch.optim.Adam(params, lr=cfg.TRAIN.lr, weight_decay=cfg.TRAIN.weight_decay)
     min_loss = float('inf')
     loss_list = []
+    val_loss_list = []
     # start the training epochs
     for epoch in range(cfg.TRAIN.epochs):
         logger.info(f"\nEPOCH {epoch+1} of {cfg.TRAIN.epochs}")
-
+        # train loss
         prog_bar = tqdm(train_loader, total=len(train_loader))
         for i, data in enumerate(prog_bar):
             optimizer.zero_grad()
             images, targets = data
             
             images = list(image.to(cfg.TRAIN.device) for image in images)
-            targets = [{k: v.to(cfg.TRAIN.device) for k, v in t.items()} for t in targets]
+            targets = [{k: v.to(cfg.TRAIN.device) for k, v in filter(lambda x:x[0] not in ['image_name','origin_shape'],t.items())} for t in targets]
 
-            loss_dict = model(images, targets)
+            loss_dict,detections = model(images, targets)
 
             losses = sum(loss for loss in loss_dict.values())
             loss_value = losses.item()
             loss_list.append(loss_value)
             losses.backward()
             optimizer.step()
-
-        
             # update the loss value beside the progress bar for each iteration
-            wandb.log({"train_loss":loss_value})
+            
             prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
+        # wandb.log({"train_loss":sum(loss_list)/len(loss_list)})
+        prog_bar = tqdm(valid_loader, total=len(valid_loader))
+        for i, data in enumerate(prog_bar):
+            images, targets = data
+            images = list(image.to(cfg.TRAIN.device) for image in images)
+            targets = [{k: v.to(cfg.TRAIN.device) for k, v in filter(lambda x:x[0] not in ['image_name','origin_shape'],t.items())} for t in targets]
+            
+            with torch.no_grad():
+                loss_dict,detections = model(images, targets)
 
+            losses = sum(loss for loss in loss_dict.values())
+            loss_value = losses.item()
+            val_loss_list.append(loss_value)
+
+            # update the loss value beside the progress bar for each iteration
+            prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
+        # wandb.log({"test_loss":sum(val_loss_list)/len(val_loss_list)})
+        
         # save the best model till now if we have the least loss in the...
         logger.info(f"\nEPOCH loss: {sum(loss_list)/len(loss_list)}")
         if sum(loss_list)/len(loss_list) < min_loss:

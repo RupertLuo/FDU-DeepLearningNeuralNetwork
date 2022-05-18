@@ -39,6 +39,7 @@ def tensor2numpy(input_tensor):
 	return cv2.cvtColor(np.uint8(in_arr*255), cv2.COLOR_BGR2RGB)
 
 
+
 def main(cfg):
     CLASSES = cfg.DATA.classes 
     NUM_CLASSES = cfg.DATA.num_classes

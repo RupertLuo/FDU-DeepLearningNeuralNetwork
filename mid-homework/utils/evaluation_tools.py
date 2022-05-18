@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+
 def calculate_iou(box_a, box_b):
     # box_a: (num, 4) ----- number of boxes, (x1y1x2y2)
     '''
