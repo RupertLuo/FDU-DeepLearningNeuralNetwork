@@ -1,60 +1,27 @@
-import sys
-sys.path.append('final_homework/InverseForm')
-import torch
-from models.model_loader import load_model
-from models.ocrnet import HRNet_Mscale,HRNet
-from utils.config import assert_and_infer_cfg,cfg
-# from runx.logx import logx
-from pathlib import Path
-from torchvision.datasets import ImageFolder
-import torchvision.transforms as standard_transforms
-import torchvision
+from transformers import SegformerFeatureExtractor, SegformerForSemanticSegmentation
 from PIL import Image
-from colorize import Colorize
-import torch.nn.functional as F
-from tqdm import tqdm
-from albumentations.pytorch import ToTensorV2
-import albumentations as A
-import numpy as np
-import cv2
-# laod model
-# logx.initialize(logdir='final_homework/task1/logs',
-#                     tensorboard=False,
-#                     global_rank=0)
-model_path = 'final_homework/InverseForm/checkpoints/hrnet48_OCR_IF_checkpoint.pth'
-arch = 'ocrnet.HRNet_Mscale'
-result_path = None
-num_classes = 19
-assert_and_infer_cfg(None, 0, False, False, arch, '48', True, True)
-checkpoint = torch.load(model_path, map_location=torch.device('cpu'))
-net = HRNet(num_classes, None, has_edge_head=False)
-# load_model(net, checkpoint)
-net.to('cuda:0')
-# load image
 
+from colorize import Colorize
+from tqdm import tqdm
+import torch.nn.functional as F
+from pathlib import Path
+import torchvision
+feature_extractor = SegformerFeatureExtractor.from_pretrained("nvidia/segformer-b5-finetuned-cityscapes-1024-1024")
+model = SegformerForSemanticSegmentation.from_pretrained("nvidia/segformer-b5-finetuned-cityscapes-1024-1024")
 vedio_img_dir = 'final_homework/task1/data/images'
 vedio_img_list = sorted(list(Path(vedio_img_dir).glob('*.jpg')))
-mean_std = (cfg.DATASET.MEAN, cfg.DATASET.STD)
-val_input_transform = standard_transforms.Compose([
-        standard_transforms.ToTensor(),
-        standard_transforms.Normalize(*mean_std)
-    ])
-# inference
 colorize = Colorize(19)
-transform = A.Compose([
-        ToTensorV2(p=1.0),
-    ])
-net.eval()
-with torch.no_grad():
-    for i,img_path in enumerate(tqdm(vedio_img_list)):
-        img = Image.open(img_path).convert('RGB')
-        # convert BGR to RGB color format
-        img = val_input_transform(img).unsqueeze(0)
-        
-        input_dict = {'images':img.cuda()}
-        output = net(input_dict)
-        pred = output['pred'][0]
-        mask = F.softmax(pred, dim=0).max(0).indices
-        color_pic = colorize(mask.cpu())
-        pic= torchvision.transforms.functional.to_pil_image(color_pic)
-        pic.save('final_homework/task1/data/image_seg/'+img_path.name)
+for i,img_path in enumerate(tqdm(vedio_img_list)):
+    image = Image.open(img_path).convert('RGB')
+    oh,ow = image.size
+    inputs = feature_extractor(images=image, return_tensors="pt")
+    outputs = model(**inputs)
+    logits = outputs.logits[0] 
+    mask = F.softmax(logits, dim=0).max(0).indices
+    color_pic = colorize(mask.cpu())
+    pic= torchvision.transforms.functional.to_pil_image(color_pic)
+    pic = pic.resize((int(oh),int(ow)))
+    pic.save('final_homework/task1/data/image_seg/'+img_path.name)
+
+ # shape (batch_size, num_labels, height/4, width/4)
+

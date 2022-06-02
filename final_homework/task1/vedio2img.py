@@ -3,7 +3,7 @@ import os
 import time
 import datetime
 import random
-
+import time 
 """
  Read video and convert it into pictures
  读取视频并将视频转换为图片
@@ -13,7 +13,7 @@ import random
 def save_img():
     # video_path = r'E:/VideoDir/'
     # videos = os.listdir(video_path)
-    videos = load_video(r'final_homework/task1/data/vedio/if_photos_gif.mp4')
+    videos = load_video(r'final_homework/task1/data/vedio/小区旁的公路.mp4')
     for video_name in videos:
         vc = cv2.VideoCapture(video_name)  # 读入视频文件
         c = 1
@@ -21,7 +21,7 @@ def save_img():
             rval, frame = vc.read()
         else:
             rval = False
-        timeF = 1  # 视频帧计数间隔频率
+        timeF = 25  # 视频帧计数间隔频率
         i = 0
         while rval:  # 循环读取视频帧
             rval, frame = vc.read()
@@ -30,7 +30,7 @@ def save_img():
                     cv2.imwrite("final_homework/task1/data/images/" + str(c) + '_' + str(random.randint(1, 100000)) +
                             '.jpg', frame)  
             c = c + 1
-            cv2.waitKey(1)
+            time.sleep(0.1)
         vc.release()
 
 def load_video(video_path):
