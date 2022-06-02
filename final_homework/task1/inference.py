@@ -21,14 +21,14 @@ import cv2
 # logx.initialize(logdir='final_homework/task1/logs',
 #                     tensorboard=False,
 #                     global_rank=0)
-model_path = 'final_homework/InverseForm/checkpoints/hrnet48_OCR_HMS_IF_checkpoint.pth'
+model_path = 'final_homework/InverseForm/checkpoints/hrnet48_OCR_IF_checkpoint.pth'
 arch = 'ocrnet.HRNet_Mscale'
 result_path = None
 num_classes = 19
 assert_and_infer_cfg(None, 0, False, False, arch, '48', True, True)
 checkpoint = torch.load(model_path, map_location=torch.device('cpu'))
-net = HRNet_Mscale(num_classes, None, has_edge_head=False)
-load_model(net, checkpoint)
+net = HRNet(num_classes, None, has_edge_head=False)
+# load_model(net, checkpoint)
 net.to('cuda:0')
 # load image
 
@@ -36,9 +36,9 @@ vedio_img_dir = 'final_homework/task1/data/images'
 vedio_img_list = sorted(list(Path(vedio_img_dir).glob('*.jpg')))
 mean_std = (cfg.DATASET.MEAN, cfg.DATASET.STD)
 val_input_transform = standard_transforms.Compose([
-    standard_transforms.ToTensor(),
-    standard_transforms.Normalize(*mean_std)
-])
+        standard_transforms.ToTensor(),
+        standard_transforms.Normalize(*mean_std)
+    ])
 # inference
 colorize = Colorize(19)
 transform = A.Compose([
@@ -47,15 +47,11 @@ transform = A.Compose([
 net.eval()
 with torch.no_grad():
     for i,img_path in enumerate(tqdm(vedio_img_list)):
-        image = cv2.imread(img_path)
+        img = Image.open(img_path).convert('RGB')
         # convert BGR to RGB color format
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
-        image_resized = image_resized/255.0
-        sample = transform(image=image_resized)
-        image_resized = sample['image'].float()
-        image = val_input_transform(image)
-        image = image.unsqueeze(0)
-        input_dict = {'images':image.cuda()}
+        img = val_input_transform(img).unsqueeze(0)
+        
+        input_dict = {'images':img.cuda()}
         output = net(input_dict)
         pred = output['pred'][0]
         mask = F.softmax(pred, dim=0).max(0).indices
