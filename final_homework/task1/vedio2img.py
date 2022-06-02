@@ -13,7 +13,7 @@ import random
 def save_img():
     # video_path = r'E:/VideoDir/'
     # videos = os.listdir(video_path)
-    videos = load_video(r'final_homework/task1/data/vedio/5ecf81717c148.mp4')
+    videos = load_video(r'final_homework/task1/data/vedio/if_photos_gif.mp4')
     for video_name in videos:
         vc = cv2.VideoCapture(video_name)  # 读入视频文件
         c = 1
@@ -21,7 +21,7 @@ def save_img():
             rval, frame = vc.read()
         else:
             rval = False
-        timeF = 10  # 视频帧计数间隔频率
+        timeF = 1  # 视频帧计数间隔频率
         i = 0
         while rval:  # 循环读取视频帧
             rval, frame = vc.read()
