@@ -58,7 +58,7 @@ with torch.no_grad():
         input_dict = {'images':image.cuda()}
         output = net(input_dict)
         pred = output['pred'][0]
-        mask = F.softmax(pred, dim=1).max(0).indices
+        mask = F.softmax(pred, dim=0).max(0).indices
         color_pic = colorize(mask.cpu())
         pic= torchvision.transforms.functional.to_pil_image(color_pic)
         pic.save('final_homework/task1/data/image_seg/'+img_path.name)
