@@ -1,0 +1,17 @@
+MODEL:
+  name: 'ViT'
+DATA:
+  name: 'cifar-100'
+  augmentation: True
+  cutout : False
+  cutmix : False
+  mixup :  False
+# cutout config
+CUTOUT:
+  n_holes: 1
+  length: 16
+TRAIN:
+  device: 'cuda:0'
+  batch_size: 128
+  epochs: 50
+  lr: 0.001

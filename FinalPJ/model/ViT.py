@@ -32,14 +32,14 @@ def swish(x):
     return x * torch.sigmoid(x)
 
 class VisionTransformer(nn.Module):
-    def __init__(self, config, img_size=224, num_classes=21843, zero_head=False, vis=False):
+    def __init__(self, config, num_classes=10, zero_head=False, vis=False):
         super(VisionTransformer, self).__init__()
         self.num_classes = num_classes
         self.zero_head = zero_head
-        self.classifier = config.classifier
-
+        self.classifier = config.MODEL.classifier
+        img_size = config.DATA.img_size
         self.transformer = Transformer(config, img_size, vis)
-        self.head = Linear(config.hidden_size, num_classes)
+        self.head = Linear(config.MODEL.hidden_size, num_classes)
 
     def forward(self, x, labels=None):
         x, attn_weights = self.transformer(x)
@@ -126,33 +126,33 @@ class Embeddings(nn.Module):
         super(Embeddings, self).__init__()
         img_size = _pair(img_size)
         self.hybrid = None
-        patch_size = _pair(config.patches["size"])
+        patch_size = _pair(config.MODEL.patches)
         n_patches = (img_size[0] // patch_size[0]) * (img_size[1] // patch_size[1])
         
 
         self.patch_embeddings = Conv2d(in_channels=in_channels,
-                                       out_channels=config.hidden_size,
+                                       out_channels=config.MODEL.hidden_size,
                                        kernel_size=patch_size,
                                        stride=patch_size)
-        self.position_embeddings = nn.Parameter(torch.zeros(1, n_patches+1, config.hidden_size))
-        self.cls_token = nn.Parameter(torch.zeros(1, 1, config.hidden_size))
+        self.position_embeddings = nn.Parameter(torch.zeros(1, n_patches+1, config.MODEL.hidden_size))
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, config.MODEL.hidden_size))
 
-        self.dropout = Dropout(config.transformer["dropout_rate"])
+        self.dropout = Dropout(config.MODEL.transformer.dropout_rate)
 
     def forward(self, x):
-        # x: torch.Size([1, 1, 768])
+        # x: torch.Size([1, 1, 128])
         B = x.shape[0]
-        # cls_token: torch.Size([1, 1, 768])
+        # cls_token: torch.Size([1, 1, 128])
         cls_tokens = self.cls_token.expand(B, -1, -1)
-        # cls_tokens: torch.Size([16, 1, 768])
+        # cls_tokens: torch.Size([16, 1, 128])
         x = self.patch_embeddings(x)
-        # x: torch.Size([16, 768, 14, 14])
+        # x: torch.Size([16, 128, 14, 14])
         x = x.flatten(2)
-        # x: torch.Size([16, 768, 196])
+        # x: torch.Size([16, 128, 196])
         x = x.transpose(-1, -2)
-        # x: torch.Size([16, 196, 768])
+        # x: torch.Size([16, 196, 128])
         x = torch.cat((cls_tokens, x), dim=1)
-        # x: torch.Size([16, 197, 768])
+        # x: torch.Size([16, 197, 128])
 
         embeddings = x + self.position_embeddings
         embeddings = self.dropout(embeddings)
@@ -164,8 +164,8 @@ class Encoder(nn.Module):
         super(Encoder, self).__init__()
         self.vis = vis
         self.layer = nn.ModuleList()
-        self.encoder_norm = LayerNorm(config.hidden_size, eps=1e-6)
-        for _ in range(config.transformer["num_layers"]):
+        self.encoder_norm = LayerNorm(config.MODEL.hidden_size, eps=1e-6)
+        for _ in range(config.MODEL.transformer.num_layers):
             layer = Block(config, vis)
             self.layer.append(copy.deepcopy(layer))
 
@@ -181,9 +181,9 @@ class Encoder(nn.Module):
 class Block(nn.Module):
     def __init__(self, config, vis):
         super(Block, self).__init__()
-        self.hidden_size = config.hidden_size
-        self.attention_norm = LayerNorm(config.hidden_size, eps=1e-6)
-        self.ffn_norm = LayerNorm(config.hidden_size, eps=1e-6)
+        self.hidden_size = config.MODEL.hidden_size
+        self.attention_norm = LayerNorm(config.MODEL.hidden_size, eps=1e-6)
+        self.ffn_norm = LayerNorm(config.MODEL.hidden_size, eps=1e-6)
         self.ffn = Mlp(config)
         self.attn = Attention(config, vis)
 
@@ -240,33 +240,33 @@ class Attention(nn.Module):
     def __init__(self, config, vis):
         super(Attention, self).__init__()
         self.vis = vis
-        self.num_attention_heads = config.transformer["num_heads"] # 12
-        self.attention_head_size = int(config.hidden_size / self.num_attention_heads)  # 768 / 12 = 64
+        self.num_attention_heads = config.MODEL.transformer.num_heads # 12
+        self.attention_head_size = int(config.MODEL.hidden_size / self.num_attention_heads)  # 768 / 12 = 64
         self.all_head_size = self.num_attention_heads * self.attention_head_size # 12 * 64 = 768
 
-        self.query = Linear(config.hidden_size, self.all_head_size)
-        self.key = Linear(config.hidden_size, self.all_head_size)
-        self.value = Linear(config.hidden_size, self.all_head_size)
+        self.query = Linear(config.MODEL.hidden_size, self.all_head_size)
+        self.key = Linear(config.MODEL.hidden_size, self.all_head_size)
+        self.value = Linear(config.MODEL.hidden_size, self.all_head_size)
 
-        self.out = Linear(config.hidden_size, config.hidden_size)
-        self.attn_dropout = Dropout(config.transformer["attention_dropout_rate"])
-        self.proj_dropout = Dropout(config.transformer["attention_dropout_rate"])
+        self.out = Linear(config.MODEL.hidden_size, config.MODEL.hidden_size)
+        self.attn_dropout = Dropout(config.MODEL.transformer.attention_dropout_rate)
+        self.proj_dropout = Dropout(config.MODEL.transformer.attention_dropout_rate)
 
         self.softmax = Softmax(dim=-1)
 
     def transpose_for_scores(self, x):
-        # x: torch.Size([16, 197, 768])
+        # x: torch.Size([16, 197, 128])
         new_x_shape = x.size()[:-1] + (self.num_attention_heads, self.attention_head_size)
         # new_x_shape = (16, 197) + (12, 64) = (16, 197, 12, 64)
         x = x.view(*new_x_shape)
         return x.permute(0, 2, 1, 3)
 
     def forward(self, hidden_states):
-        # hidden_states: torch.Size([16, 197, 768])
+        # hidden_states: torch.Size([16, 197, 128])
         mixed_query_layer = self.query(hidden_states)
         mixed_key_layer = self.key(hidden_states)
         mixed_value_layer = self.value(hidden_states)
-        # layer: torch.Size([16, 197, 768])
+        # layer: torch.Size([16, 197, 128])
 
         query_layer = self.transpose_for_scores(mixed_query_layer)
         key_layer = self.transpose_for_scores(mixed_key_layer)
@@ -288,7 +288,7 @@ class Attention(nn.Module):
         # context_layer: torch.Size([16, 197, 12, 64])
         new_context_layer_shape = context_layer.size()[:-2] + (self.all_head_size,)
         context_layer = context_layer.view(*new_context_layer_shape)
-        # context_layer: torch.Size([16, 197, 768])
+        # context_layer: torch.Size([16, 197, 128])
 
         attention_output = self.out(context_layer)
         attention_output = self.proj_dropout(attention_output)
@@ -298,10 +298,10 @@ ACT2FN = {"gelu": torch.nn.functional.gelu, "relu": torch.nn.functional.relu, "s
 class Mlp(nn.Module):
     def __init__(self, config):
         super(Mlp, self).__init__()
-        self.fc1 = Linear(config.hidden_size, config.transformer["mlp_dim"])
-        self.fc2 = Linear(config.transformer["mlp_dim"], config.hidden_size)
+        self.fc1 = Linear(config.MODEL.hidden_size, config.MODEL.transformer.mlp_dim)
+        self.fc2 = Linear(config.MODEL.transformer.mlp_dim, config.MODEL.hidden_size)
         self.act_fn = ACT2FN["gelu"]
-        self.dropout = Dropout(config.transformer["dropout_rate"])
+        self.dropout = Dropout(config.MODEL.transformer.dropout_rate)
 
         self._init_weights()
 

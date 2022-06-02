@@ -2907,4 +2907,969 @@ TRAIN:
 2022-05-06 06:16:30 - INFO - task1_train.py - 140 - {'epoch': 47, 'train_acc': 0.68852, 'test_acc': 0.4992}
 2022-05-06 06:16:57 - INFO - task1_train.py - 140 - {'epoch': 48, 'train_acc': 0.68586, 'test_acc': 0.5061}
 2022-05-06 06:17:25 - INFO - task1_train.py - 137 - save the model!!
-2022-05-06 06:17:26 - INFO - task1_train.py - 140 - {'epoch': 49, 'train_acc': 0.70744, 'test_acc': 0.5079}
+2022-05-06 06:17:26 - INFO - task1_train.py - 140 - {'epoch': 49, 'train_acc': 0.70744, 'test_acc': 0.5079}2022-06-02 20:30:28 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.1
+    num_heads: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:33:13 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: resnet18
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.1
+    num_heads: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:35:06 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  name: ViT
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.1
+    num_heads: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:37:47 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 3072
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:43:46 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 3072
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:53:41 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 256
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 3072
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:55:48 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 256
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 3072
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 20:56:22 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 256
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 128
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 3072
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:31:41 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 128
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:32:29 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 256
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:33:12 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:33:33 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 256
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:33:46 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:34:25 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:34:55 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:35:10 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:39:29 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:46:41 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 0
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:46:52 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 1
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:47:04 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 768
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:47:19 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 512
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:55:13 - INFO - task3_train.py - 27 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 512
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:55:40 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 512
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:56:13 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 512
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 32
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:56:30 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 256
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05
+2022-06-02 21:56:57 - INFO - task3_train.py - 30 - Train config: CUTMIX:
+  beta: 1
+  cutmix_prob: 0.5
+CUTOUT:
+  length: 16
+  n_holes: 1
+DATA:
+  augmentation: True
+  cutmix: False
+  cutout: False
+  img_size: 224
+  mixup: False
+  name: cifar-100
+LOG_PATH: mid-homework/logs/train.log
+MIXUP:
+  alpha: 1
+MODEL:
+  classifier: token
+  hidden_size: 512
+  name: ViT
+  patches: (16, 16)
+  representation_size: None
+  saved_path: ./FinalPJ/trained_model/
+  transformer:
+    attention_dropout_rate: 0.0
+    dropout_rate: 0.1
+    mlp_dim: 64
+    num_heads: 12
+    num_layers: 12
+RANDOM_SEED: 44
+TRAIN:
+  batch_size: 128
+  device: cuda:0
+  epochs: 50
+  lr: 0.001
+  num_workers: 4
+  optimizer: adam
+  weight_decay: 1e-05

@@ -8,11 +8,9 @@ from torchvision import datasets, transforms
 from pathlib import Path
 from xml.etree import ElementTree as et
 import sys
-sys.path.insert(0,'mid-homework')
+sys.path.insert(0,'FinalPJ')
 from data.argument_type import Cutout
 from utils.data_utils import collate_fn
-from configs.config_task1 import get_cfg_defaults as get_cfg_defaults1
-from configs.config_task2 import get_cfg_defaults as get_cfg_defaults2
 from tqdm import tqdm
 def load_cifar_dataset(cfg):
     # Image Preprocessing
