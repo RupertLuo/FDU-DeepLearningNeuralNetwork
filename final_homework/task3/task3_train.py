@@ -17,7 +17,7 @@ ResNet = ResNet18()
 total = sum([param.nelement() for param in ResNet.parameters()])
 
 print("Number of ResNet 18 parameters: ",total)
-
+# https://colab.research.google.com/drive/1h-RFjV6xqKwQhCBODGHzhmuRiiWtwXpX?usp=sharing#scrollTo=zMVosXYiZgap
 class WarmupCosineSchedule(LambdaLR):
     """ Linear warmup and then cosine decay.
         Linearly increases learning rate from 0 to 1 over `warmup_steps` training steps.
@@ -79,7 +79,7 @@ def test(loader,model,device):
 def main(cfg):
     wandb.init(project="FinalPJ", entity="Guardian_zc")
     device = cfg.TRAIN.device
-    train_dataset,test_dataset,num_classes = load_cifar_dataset(cfg)
+    train_dataset,test_dataset, _ = load_cifar_dataset(cfg)
     # Data Loader (Input Pipeline)
     train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                             batch_size=cfg.TRAIN.batch_size,
