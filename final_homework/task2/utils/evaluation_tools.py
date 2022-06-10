@@ -3,6 +3,7 @@ from podm.metrics import get_pascal_voc_metrics, MetricPerClass, get_bounding_bo
 from podm.metrics import MetricPerClass
 from podm.box import Box, intersection_over_union
 import numpy as np
+
 def calculate_iou(box_a, box_b):
     # box_a: (num, 4) ----- number of boxes, (x1y1x2y2)
     '''

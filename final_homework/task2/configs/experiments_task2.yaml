@@ -1,0 +1,6 @@
+TRAIN:
+  device: 'cuda:1'
+  batch_size: 16
+MODEL:
+  pretrained_backbone: False
+  mask_rcnn_pretrain: True

@@ -1,10 +1,11 @@
 mid-homework/dataset/
 PyTorch_Faster_RCNN_Object_Detection_Model/
 mid-homework/trained_model
-*/__pycache__
-*/*/__pycache__
+*__pycache__
 mid-homework/imgs/task2_output/test
 mid-homework/logs
 dataset/VOCtrainval_06-Nov-2007.tar
 final_homework/dataset/VOC2007/
 final_homework/task1/logs
+final_homework/task2/logs
+final_homework/task2/trained_model
