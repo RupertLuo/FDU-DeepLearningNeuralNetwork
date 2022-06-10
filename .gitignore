@@ -9,3 +9,4 @@ final_homework/dataset/VOC2007/
 final_homework/task1/logs
 final_homework/task2/logs
 final_homework/task2/trained_model
+*wandb
